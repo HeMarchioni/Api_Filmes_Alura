@@ -14,14 +14,14 @@ namespace FilmesAPI.Controllers
     public class FilmeController : ControllerBase //-> sempre extender a classe Base
     {
 
-        private FilmeContext _context;  //-> Variavel que recebe -> a classe de acesso ao BD
+        private AppDbContext _context;  //-> Variavel que recebe -> a classe de acesso ao BD
         private IMapper _mapper;        //> variavel que recebe -> mapper (IMapper tipo)
 
 
 
-        public FilmeController(FilmeContext filmeContext, IMapper mapper)   //-> injetando o FilmeContect(DB) no contrutor e (IMapper -> mapper)
+        public FilmeController(AppDbContext AppDbContext, IMapper mapper)   //-> injetando o FilmeContect(DB) no contrutor e (IMapper -> mapper)
         {
-            _context = filmeContext;
+            _context = AppDbContext;
             _mapper = mapper;
         }
 
