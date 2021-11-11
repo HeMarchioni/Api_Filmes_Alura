@@ -1,4 +1,6 @@
-﻿using FilmesAPI.Data;
+﻿using AutoMapper;
+using FilmesAPI.Data;
+using FilmesAPI.Data.Dtos;
 using FilmesAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -13,19 +15,26 @@ namespace FilmesAPI.Controllers
     {
 
         private FilmeContext _context;  //-> Variavel que recebe -> a classe de acesso ao BD
+        private IMapper _mapper;        //> variavel que recebe -> mapper (IMapper tipo)
 
 
-        public FilmeController(FilmeContext filmeContext)   //-> injetando o FilmeContect(DB) no contrutor
+
+        public FilmeController(FilmeContext filmeContext, IMapper mapper)   //-> injetando o FilmeContect(DB) no contrutor e (IMapper -> mapper)
         {
             _context = filmeContext;
+            _mapper = mapper;
         }
 
 
 
 
         [HttpPost]  //-> metodo http que ira Fazer a chamada da rota
-        public IActionResult AdicionaFilme([FromBody] Filme filme)  //-> FromBody (vem do corpo da requisição)
+        public IActionResult AdicionaFilme([FromBody] CreateFilmeDto filmeDto)  //-> FromBody (vem do corpo da requisição)
         {
+
+            Filme filme = _mapper.Map<Filme>(filmeDto);  // -> utilizando o mapper para injetar filmeDto em Filme (criando o filme)
+
+
 
             _context.Add(filme); //-> _context é a extensao de acesso ao banco .add (adiciona)
 
@@ -53,15 +62,21 @@ namespace FilmesAPI.Controllers
 
             if (filme != null)
             {
-                return Ok(filme); // -> Retorno para (Ok 200)
+
+                ReadFilmeDto filmeDto = _mapper.Map<ReadFilmeDto>(filme);
+
+
+                return Ok(filmeDto); // -> Retorno para (Ok 200)
             }
             return NotFound(); // -> retorno de Nao encontrado (404)
 
         }
 
         [HttpPut("{id}")]
-        public IActionResult AtualizaFilmePorId(int id, [FromBody] Filme filmeAtualizado)  //->recebe o Valor da Url // -> IActionResult (retorna um resultado 200 ok 404 (nesse caso Created)
+        public IActionResult AtualizaFilmePorId(int id, [FromBody] UpdateFilmeDto filmeDto)  //->recebe o Valor da Url // -> IActionResult (retorna um resultado 200 ok 404 (nesse caso Created)
         {
+
+
 
 
             Filme filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
@@ -72,10 +87,7 @@ namespace FilmesAPI.Controllers
                 return NotFound(); // -> Retorno nao encontrado (404)
             }
 
-            filme.Titulo = filmeAtualizado.Titulo;
-            filme.Genero = filmeAtualizado.Genero;
-            filme.Duracao = filmeAtualizado.Duracao;
-            filme.Diretor = filmeAtualizado.Diretor;
+            _mapper.Map(filmeDto,filme);  // -> se o Objeto ja esta criado (usar desse jeito injeta FilmeDto em filme)
 
             _context.SaveChanges();
 

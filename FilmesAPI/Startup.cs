@@ -29,6 +29,9 @@ namespace FilmesAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
+            // -> Inicialização do AutoMapper
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             // -> Configuração do banco de dados na Inicialização
             services.AddDbContext<FilmeContext>(optionsAction => optionsAction.UseMySQL(Configuration.GetConnectionString("FilmeConnection"))); // ->  GetConnectionString("FilmeConnection") -> referencia ao que foi colocado em appSettings.json
 
