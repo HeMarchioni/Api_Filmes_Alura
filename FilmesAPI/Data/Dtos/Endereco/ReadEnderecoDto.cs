@@ -1,20 +1,20 @@
-﻿using System;
+﻿using FilmesAPI.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 
-namespace FilmesAPI.Models
+namespace FilmesAPI.Data.Dtos
 {
-    public class Cinema
+    public class ReadEnderecoDto
     {
         [Key]
         [Required]
         public int Id { get; set; }
         [Required(ErrorMessage = "O campo de nome é obrigatório")]
         public string Nome { get; set; }
-
-        public Endereco Endereco { get; set; }   //-> Referencia de relacionamento 1 x 1 
-        public int EnderecoId { get; set; }    // -> fk com o id de endereço
-       // public int GerenteFK { get; set; }
+        public object Endereco { get; set; }
     }
 }

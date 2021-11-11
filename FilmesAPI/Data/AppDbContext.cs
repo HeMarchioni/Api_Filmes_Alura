@@ -16,8 +16,24 @@ namespace FilmesAPI.Data
         }
 
 
+        protected override void OnModelCreating(ModelBuilder builder) //-> para configurar os relacionamentos criar esse metodo
+        {
+
+            builder.Entity<Endereco>()
+                .HasOne(endereco => endereco.Cinema) //-> relaxao de Endereço para cinema 1 x 1
+                .WithOne(cinema => cinema.Endereco)  // -> relacao de cinema para endereço 1 x 1
+                .HasForeignKey<Cinema>(cinema => cinema.EnderecoId); // -> cinema recebe a FK endereçoId
+
+        }
+
+
+
+
+
         public DbSet<Filme> Filmes { get; set; }   // -> qual classe vai ser Mapeada e virar tabela (similar ao @Entity Java)
         public DbSet<Cinema> Cinemas { get; set; }
+
+        public DbSet<Endereco> Enderecos { get; set; }
 
 
     }
