@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace FilmesAPI.Models
@@ -23,7 +24,8 @@ namespace FilmesAPI.Models
         [Required(ErrorMessage = "O Campo Numero é Obrigatorio")]
         public int Numero { get; set; }
 
-        public Cinema Cinema { get; set; } //-> relacionamento 1 x 1 
+        [JsonIgnore] // -> para evitar loop na hora que chama o Cinema que vai chamar endereço que tem o cinema entra em loop (VAI SER IGNORADO)
+        public virtual Cinema Cinema { get; set; } //-> relacionamento 1 x 1 
 
 
 

@@ -33,8 +33,8 @@ namespace FilmesAPI
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             // -> Configuração do banco de dados na Inicialização
-            services.AddDbContext<FilmeContext>(optionsAction => optionsAction.UseMySQL(Configuration.GetConnectionString("FilmeConnection"))); // ->  GetConnectionString("FilmeConnection") -> referencia ao que foi colocado em appSettings.json
-
+            services.AddDbContext<AppDbContext>(opts => opts.UseLazyLoadingProxies().UseMySQL(Configuration.GetConnectionString("FilmeConnection"))); // ->  GetConnectionString("FilmeConnection") -> referencia ao que foi colocado em appSettings.json
+                                                                                                                                                      // -> UseLazyLoadingProxies().  depois de colocar a extensao no nuget (EntityFrameworkCore.Proxies) colocar para permitir a chamada de um enteidade em outra para buscar e inserir dados                             
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
