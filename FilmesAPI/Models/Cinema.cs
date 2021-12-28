@@ -19,5 +19,9 @@ namespace FilmesAPI.Models
 
         public virtual Gerente Gerente { get; set; }   //-> Referencia de relacionamento 1 cinema so tem 1 gerente (virtual para o lazy funcionar)
         public int GerenteId { get; set; }    // -> fk com o id do Gerente
+
+
+        public virtual List<Sessao> Sessoes { get; set; }
+
     }
 }

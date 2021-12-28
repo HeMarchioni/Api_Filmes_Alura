@@ -32,6 +32,21 @@ namespace FilmesAPI.Data
                 .HasOne(cinema => cinema.Gerente) //-> relaxao de 1 Cinema para  1geremte
                 .WithMany(gerente => gerente.Cinemas)  // -> relacao de  1 Gerente para N Cinemas
                 .HasForeignKey(cinema => cinema.GerenteId); // -> cinema recebe a FK GerenteId (começo com cinema foringKey esta no cinema nao precisa <Cinema> disso)
+                                                            //.IsRequired(false)//-> nao é requerido pode ser add sem a FK;
+                                                            // .OnDelete(DeleteBehavior.Restrict);  // -> se Apagado Apagado o gerente não apaga o Cinema (se for cascade apaga default)
+
+
+            builder.Entity<Sessao>()
+                .HasOne(sessao => sessao.filme) //-> relaxao 
+                .WithMany(filme => filme.Sessoes)  // -> relacao 
+                .HasForeignKey(sessao => sessao.FilmeId);
+
+
+            builder.Entity<Sessao>()
+                .HasOne(sessao => sessao.cinema) //-> relaxao 
+                .WithMany(cinema => cinema.Sessoes)  // -> relacao 
+                .HasForeignKey(sessao => sessao.CinemaId);
+
 
 
 

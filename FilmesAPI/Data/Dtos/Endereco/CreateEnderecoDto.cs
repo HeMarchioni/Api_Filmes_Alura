@@ -9,9 +9,13 @@ namespace FilmesAPI.Data.Dtos
 {
     public class CreateEnderecoDto
     {
-        [Required(ErrorMessage = "O campo de nome é obrigatório")]
-        public string Nome { get; set; }
-        public int EnderecoFK { get; set; }
-        public int GerenteFK { get; set; }
+        [Required(ErrorMessage = "O Campo Logadouro é Obrigatorio")]  //-> Validação (ja retorna Bad request e a mensagem no lugar do OBJ) 
+        public string Logradouro { get; set; }
+
+        [Required(ErrorMessage = "O Campo Bairro é Obrigatorio")]
+        public string Bairro { get; set; }
+
+        [Required(ErrorMessage = "O Campo Numero é Obrigatorio")]
+        public int Numero { get; set; }
     }
 }

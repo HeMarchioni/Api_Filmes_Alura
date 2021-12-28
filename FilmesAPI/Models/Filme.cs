@@ -25,5 +25,7 @@ namespace FilmesAPI.Models
         public float Duracao { get; set; }
 
 
+        public virtual List<Sessao> Sessoes { get; set; }
+
     }
 }
